@@ -237,7 +237,7 @@ class WooCommerceClient(object):
 		for name, value in parameters:
 			query_vals.append(name + '%3D' + value)
 
-		query_string = '%26'.join(query_vals)
+		query_string = '%26'.join(query_vals).replace('%5B', '%255B').replace('%5D', '%255D')
 
 		_hash = hmac.new(self.ConsumerSecret, method + '&' + base_url + '&' + query_string, hashlib.sha256).digest()
 		signature = _hash.encode('base64').rstrip('\n') # random python thing to work around
